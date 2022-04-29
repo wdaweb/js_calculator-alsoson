@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>計算機</title>
+  <style>
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: url(https://cdn.pixabay.com/photo/2017/05/11/08/37/universe-2303321_1280.jpg) no-repeat center center / cover;
+      color: aliceblue;
+      font-size: 45px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+
+    table {
+      position: relative;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      border-spacing: 10px;
+      z-index: 1;
+    }
+
+    td {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      vertical-align: middle;
+      border: 2px solid lavender;
+      border-radius: 25px;
+      background-color: rgb(240, 248, 255, 0.13);
+      box-shadow: 5px 5px 5px rgb(128, 128, 128, 0.5);
+    }
+
+    td:hover {
+      background-color: lavender;
+      border: 2px solid rgb(210, 210, 210, 0.3);
+      color: black;
+    }
+
+    .no:hover {
+      background-color: rgb(240, 248, 255, 0.13);
+      border: 2px solid lavender;
+      color: aliceblue;
+    }
+
+    @keyframes circle {
+      0% {
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
+
+      100% {
+        opacity: 0.2;
+      }
+    }
+
+    .circle {
+      animation-name: circle;
+      animation-duration: 6s;
+      animation-iteration-count: infinite;
+      animation-direction: alternate;
+      animation-fill-mode: both;
+      animation-delay: 1.5s;
+      animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+    }
+
+    span img {
+      position: absolute;
+      left: 250px;
+      transform: translate(-50%, 0%);
+      top: 0;
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <table>
+
+    <tr>
+      <td class="no" colspan="4" id='input'>0</td>
+    </tr>
+
+    <tr>
+      <td style="font-size: 35px;">C</td>
+      <td>/</td>
+      <td>*</td>
+      <td>-</td>
+    </tr>
+
+    <tr>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+      <td rowspan="2">+</td>
+    </tr>
+
+    <tr>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+      <td rowspan="2">=</td>
+    </tr>
+
+    <tr>
+      <td colspan="2">0</td>
+      <td>.</td>
+    </tr>
+
+
+  </table>
+  <span class="circle">
+    <img src="./meteor2.png" alt="">
+  </span>
+
+
+  <script>
+    const input = document.getElementById('input')
+    const tds = document.querySelectorAll('td:not(#input)')
+
+    for (const td of tds) {
+      td.onclick = () => {
+        const text = td.innerText
+        if (text === '=') {
+          // 執行算式
+          input.innerText = eval(input.innerText)
+        } else if (text === 'C') {
+          // 重設
+          input.innerText = '0'
+        } else {
+          // 一般按鍵
+          if (input.innerText === '0') {
+            input.innerText = text
+          } else {
+            input.innerText += text
+          }
+        }
+      }
+    }
+
+    document.onkeydown = event => {
+      if (event.key === 'Enter') {
+        input.innerText = eval(input.innerText)
+      } else if (
+        !isNaN(parseInt(event.key)) ||
+        event.key === '+' ||
+        event.key === '-' ||
+        event.key === '*' ||
+        event.key === '/' ||
+        event.key === '.'
+      ) {
+        if (input.innerText === '0') {
+          input.innerText = event.key
+        } else {
+          input.innerText += event.key
+        }
+      }
+    }
+
+
+  </script>
+</body>
+
+</html>
